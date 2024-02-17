@@ -86,19 +86,20 @@ const { quote, author } = Astro.props;
 </style>
 
 <script>
-let isFetchingQuote = false;
+  let isFetchingQuote = false;
 
   document.querySelector("#button")?.addEventListener("click", async () => {
     if (isFetchingQuote) {
-      return
+      return;
     }
 
-    isFetchingQuote = true
+    isFetchingQuote = true;
 
     const res = await fetch("https://waifu.it/api/v4/quote", {
       headers: {
         Authorization: "Nzc2MTc2Njk0MjA5NDEzMTcw.MTcwODE5NjEwOA--.618e877426b",
       },
+      cache: "no-store",
     });
 
     try {

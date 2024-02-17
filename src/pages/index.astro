@@ -11,6 +11,7 @@ const res = await fetch("https://waifu.it/api/v4/quote", {
   headers: {
     Authorization: "Nzc2MTc2Njk0MjA5NDEzMTcw.MTcwODE5NjEwOA--.618e877426b",
   },
+  cache: "no-store",
 });
 
 const data: QuoteItem = await res.json();
@@ -21,4 +22,3 @@ const data: QuoteItem = await res.json();
     <Quote quote={data.quote} author={data.author} />
   </main>
 </Layout>
-
