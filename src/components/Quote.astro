@@ -1,0 +1,115 @@
+---
+const { quote, author } = Astro.props;
+---
+
+<div class="quote">
+  <header>
+    <h1>Anime Quotes</h1>
+  </header>
+  <div class="quote_container">
+    <p class="text">"{quote}"</p>
+    <p class="author">― {author}</p>
+  </div>
+  <button id="button">New quote</button>
+</div>
+
+<style>
+  .quote {
+    width: 600px;
+    background-color: rgba(13, 13, 13, 0.95);
+    border-radius: 10px;
+    border: 1px solid #1c1d20;
+    padding: 30px;
+  }
+
+  .quote header {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .quote_container {
+    margin: 35px 0;
+  }
+
+  .text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 25px;
+  }
+
+  .author {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 1rem;
+    font-style: italic;
+    color: #aaa;
+  }
+
+  button {
+    background-color: rgba(13, 13, 13, 0.95);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border: 1px solid #1c1d20;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #333;
+  }
+
+  @media screen and (max-width: 600px) {
+    .quote {
+      width: 90%;
+      padding: 20px;
+    }
+
+    .quote header {
+      font-size: 16px;
+    }
+
+    .text {
+      font-size: 14px;
+    }
+
+    .author {
+      font-size: 0.9rem;
+    }
+
+    button {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  document.querySelector("#button")?.addEventListener("click", async () => {
+    const res = await fetch("https://waifu.it/api/v4/quote", {
+      headers: {
+        Authorization: "Nzc2MTc2Njk0MjA5NDEzMTcw.MTcwODE5NjEwOA--.618e877426b",
+      },
+    });
+
+    const data = await res.json();
+
+    const quote = data.quote;
+    const author = data.author;
+
+    const textElement = document.querySelector(".text");
+    if (textElement) {
+      textElement.textContent = `"${quote}"`;
+    } else {
+      console.error("El elemento text no existe en el DOM.");
+    }
+
+    const authorElement = document.querySelector(".author");
+    if (authorElement) {
+      authorElement.textContent = `"${author}"`;
+    } else {
+      console.error("El elemento author no existe en el DOM.");
+    }
+  });
+</script>
