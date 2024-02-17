@@ -86,30 +86,44 @@ const { quote, author } = Astro.props;
 </style>
 
 <script>
+let isFetchingQuote = false;
+
   document.querySelector("#button")?.addEventListener("click", async () => {
+    if (isFetchingQuote) {
+      return
+    }
+
+    isFetchingQuote = true
+
     const res = await fetch("https://waifu.it/api/v4/quote", {
       headers: {
         Authorization: "Nzc2MTc2Njk0MjA5NDEzMTcw.MTcwODE5NjEwOA--.618e877426b",
       },
     });
 
-    const data = await res.json();
+    try {
+      const data = await res.json();
 
-    const quote = data.quote;
-    const author = data.author;
+      const quote = data.quote;
+      const author = data.author;
 
-    const textElement = document.querySelector(".text");
-    if (textElement) {
-      textElement.textContent = `"${quote}"`;
-    } else {
-      console.error("El elemento text no existe en el DOM.");
-    }
+      const textElement = document.querySelector(".text");
+      if (textElement) {
+        textElement.textContent = `"${quote}"`;
+      } else {
+        console.error("El elemento text no existe en el DOM.");
+      }
 
-    const authorElement = document.querySelector(".author");
-    if (authorElement) {
-      authorElement.textContent = `"${author}"`;
-    } else {
-      console.error("El elemento author no existe en el DOM.");
+      const authorElement = document.querySelector(".author");
+      if (authorElement) {
+        authorElement.textContent = `"${author}"`;
+      } else {
+        console.error("El elemento author no existe en el DOM.");
+      }
+    } catch (error) {
+      console.error("Error al obtener una nueva cita:", error);
+    } finally {
+      isFetchingQuote = false;
     }
   });
 </script>
