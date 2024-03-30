@@ -1,5 +1,5 @@
 ---
-const { quote, author } = Astro.props;
+const { quote, character } = Astro.props;
 ---
 
 <div class="quote">
@@ -8,7 +8,7 @@ const { quote, author } = Astro.props;
   </header>
   <div class="quote_container">
     <p class="text">"{quote}"</p>
-    <p class="author">― {author}</p>
+    <p class="character">― {character}</p>
   </div>
   <button id="button">New quote</button>
 </div>
@@ -38,7 +38,7 @@ const { quote, author } = Astro.props;
     margin: 0 0 25px;
   }
 
-  .author {
+  .character {
     display: flex;
     justify-content: flex-end;
     font-size: 1rem;
@@ -75,7 +75,7 @@ const { quote, author } = Astro.props;
       font-size: 14px;
     }
 
-    .author {
+    .character {
       font-size: 0.9rem;
     }
 
@@ -95,18 +95,13 @@ const { quote, author } = Astro.props;
 
     isFetchingQuote = true;
 
-    const res = await fetch("https://waifu.it/api/v4/quote", {
-      headers: {
-        Authorization: "Nzc2MTc2Njk0MjA5NDEzMTcw.MTcwODE5NjEwOA--.618e877426b",
-      },
-      cache: "no-store",
-    });
+    const res = await fetch("https://animechan.xyz/api/random")
 
     try {
       const data = await res.json();
 
       const quote = data.quote;
-      const author = data.author;
+      const character = data.character;
 
       const textElement = document.querySelector(".text");
       if (textElement) {
@@ -115,9 +110,9 @@ const { quote, author } = Astro.props;
         console.error("El elemento text no existe en el DOM.");
       }
 
-      const authorElement = document.querySelector(".author");
-      if (authorElement) {
-        authorElement.textContent = `"${author}"`;
+      const characterElement = document.querySelector(".character");
+      if (characterElement) {
+        characterElement.textContent = `― ${character}`;
       } else {
         console.error("El elemento author no existe en el DOM.");
       }

@@ -1,24 +1,19 @@
 ---
 interface QuoteItem {
   quote: string;
-  author: string;
+  character: string;
 }
 
 import Layout from "../layouts/Layout.astro";
 import Quote from "../components/Quote.astro";
 
-const res = await fetch("https://waifu.it/api/v4/quote", {
-  headers: {
-    Authorization: "Nzc2MTc2Njk0MjA5NDEzMTcw.MTcwODE5NjEwOA--.618e877426b",
-  },
-  cache: "no-store",
-});
+const res = await fetch("https://animechan.xyz/api/random")
 
 const data: QuoteItem = await res.json();
 ---
 
 <Layout title="Random Quote Generator">
   <main>
-    <Quote quote={data.quote} author={data.author} />
+    <Quote quote={data.quote} character={data.character} />
   </main>
 </Layout>
